@@ -2040,6 +2040,56 @@ static struct config_bool ConfigureNamesBool[] =
 		NULL, NULL, NULL
 	},
 
+    {
+            {"debug_mode", PGC_USERSET, UNGROUPED,
+             gettext_noop("Enable debug mode"),
+             NULL
+            },
+            &debug_mode,
+            false,
+            NULL, NULL, NULL
+    },
+
+    {
+            {"read_single_cards", PGC_USERSET, UNGROUPED,
+             gettext_noop("Enable external cardinality estimation for single table sub-queries."),
+             NULL
+            },
+            &read_single_cards,
+            false,
+            NULL, NULL, NULL
+    },
+
+    {
+            {"read_join_cards", PGC_USERSET, UNGROUPED,
+             gettext_noop("Enable external cardinality estimation for join sub-queries."),
+             NULL
+            },
+            &read_join_cards,
+            false,
+            NULL, NULL, NULL
+    },
+
+    {
+            {"print_sub_queries", PGC_USERSET, UNGROUPED,
+             gettext_noop("Enable sub-queries printing."),
+             NULL
+            },
+            &print_sub_queries,
+            false,
+            NULL, NULL, NULL
+    },
+
+    {
+            {"write_pg_card_estimates", PGC_USERSET, UNGROUPED,
+             gettext_noop("Enable the built-in cardinality estimation results dumping."),
+             NULL
+            },
+            &write_pg_card_estimates,
+            false,
+            NULL, NULL, NULL
+    },
+
 	/* End-of-list marker */
 	{
 		{NULL, 0, 0, NULL, NULL}, NULL, false, NULL, NULL, NULL
@@ -3381,6 +3431,57 @@ static struct config_int ConfigureNamesInt[] =
 		NULL, assign_tcp_user_timeout, show_tcp_user_timeout
 	},
 
+    {
+            {"mainquery_no", PGC_USERSET, UNGROUPED,
+             gettext_noop("Sets the mainquery number of cardinality estimation."),
+             NULL
+            },
+            &mainquery_no,
+            0, 0, INT_MAX,
+            NULL, NULL, NULL
+    },
+
+
+    {
+            {"join_est_no", PGC_USERSET, UNGROUPED,
+             gettext_noop("Sets the join sub-query number of cardinality estimation."),
+             NULL
+            },
+            &join_est_no,
+            0, 0, INT_MAX,
+            NULL, NULL, NULL
+    },
+
+    {
+            {"single_est_no", PGC_USERSET, UNGROUPED,
+             gettext_noop("Sets the single-tbl sub-query number of cardinality estimation."),
+             NULL
+            },
+            &single_est_no,
+            0, 0, INT_MAX,
+            NULL, NULL, NULL
+    },
+
+    {
+            {"single_read_flag", PGC_USERSET, UNGROUPED,
+             gettext_noop("Determine if re-read cardinality estimations of single-tbl sub-queries from file."),
+             NULL
+            },
+            &single_read_flag,
+            0, 0, INT_MAX,
+            NULL, NULL, NULL
+    },
+
+    {
+            {"join_read_flag", PGC_USERSET, UNGROUPED,
+             gettext_noop("Determine if re-read cardinality estimations of join sub-queries from file."),
+             NULL
+            },
+            &join_read_flag,
+            0, 0, INT_MAX,
+            NULL, NULL, NULL
+    },
+
 	/* End-of-list marker */
 	{
 		{NULL, 0, 0, NULL, NULL}, NULL, 0, 0, 0, NULL, NULL, NULL
@@ -4429,6 +4530,50 @@ static struct config_string ConfigureNamesString[] =
 		"",
 		check_backtrace_functions, assign_backtrace_functions, NULL
 	},
+
+    {
+            {"single_cards_fname", PGC_USERSET, UNGROUPED,
+                    gettext_noop("Sets the file name of external cardnality estimations for single table sub-queries."),
+                    NULL,
+                    GUC_IS_NAME
+            },
+            &single_cards_fname,
+            "",
+            check_cluster_name, NULL, NULL
+    },
+
+    {
+            {"join_cards_fname", PGC_USERSET, UNGROUPED,
+                    gettext_noop("Sets the file name of external cardnality estimations for join sub-queries."),
+                    NULL,
+                    GUC_IS_NAME
+            },
+            &join_cards_fname,
+            "",
+            check_cluster_name, NULL, NULL
+    },
+
+    {
+            {"pg_single_cards_fname", PGC_USERSET, UNGROUPED,
+                    gettext_noop("Dump the built-in estimation results for single table sub-queries into this file."),
+                    NULL,
+                    GUC_IS_NAME
+            },
+            &pg_single_cards_fname,
+            "",
+            check_cluster_name, NULL, NULL
+    },
+
+    {
+            {"pg_join_cards_fname", PGC_USERSET, UNGROUPED,
+                    gettext_noop("Dump the built-in estimation results for join sub-queries into this file."),
+                    NULL,
+                    GUC_IS_NAME
+            },
+            &pg_join_cards_fname,
+            "",
+            check_cluster_name, NULL, NULL
+    },
 
 	/* End-of-list marker */
 	{
